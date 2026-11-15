@@ -1,6 +1,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class Product {
 	
@@ -9,11 +10,10 @@ public class Product {
 	private String name;
 	private int qtyStock;
 	private BigDecimal price;
-	
+	private boolean active = true;
 	
 	//Construtor padrão, permite o compilador iniciar os campos com os valores padrão
 	public Product() { 
-	
 	}
 	
 	//Sobrecarga do método construtor para inicializar o objeto com as variáveis pré-definidas
@@ -24,13 +24,22 @@ public class Product {
 		this.price = price;
 	}
 	
+	//Retorna o valor total em estoque do produto
+	public BigDecimal getInventoryValue() {
+		return getPrice().multiply(BigDecimal.valueOf(getQtyStock()));
+	}
+	
+	
 	
 	//Retorna a descrição do produto
 	public String toString() {
+		DecimalFormat real =  new DecimalFormat("0.00");
 		String s = "Número do Item: " + getId() 
 				 + "\nNome: " + getName()
 				 + "\nQuantidade em estoque: " + getQtyStock()
-				 + "\nPreço: R$" + getPrice();
+				 + "\nPreço: R$ " + real.format(getPrice()) 
+				 + "\nValor do estoqueço: R$" + real.format(getInventoryValue())
+				 + "\nStatus do produto: " + (getActive() ? "Ativo" : "Descontinuado");
 		return s;
 	}
 	
@@ -66,6 +75,14 @@ public class Product {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+	
+	public boolean getActive() {
+		return this.active;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 }

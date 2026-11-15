@@ -60,6 +60,8 @@ public class ProductTester {
 		Product p5 = new Product(10005, "Resident Evil 4 Remake", 650, new BigDecimal("160.00"));
 		Product p6 = new Product(10001, "The Witcher 3", 8329, new BigDecimal("100.00"));
 		
+		p6.setActive(false);
+		
 		Product[] products = {p1, p2, p3, p4, p5, p6};
 		
 		for(Product p: products) {
