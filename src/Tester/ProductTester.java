@@ -1,6 +1,7 @@
 package Tester;
 
 import java.math.BigDecimal;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import model.Product;
@@ -14,59 +15,78 @@ public class ProductTester {
 		String[] tempName = new String[6];
 		int[] tempQtyStock = new int[6];
 		BigDecimal[] tempPrice = new BigDecimal[6];
+		int maxSize = -1;
 		
 		
-		
-		System.out.print("================================================\n");
-		System.out.print("Adicionando produtos 1 e 2\n");
-		
-		for(int i = 0; i < 2; i++) {
+		while(maxSize < 0) {
 			try {
-				System.out.print("================================================");
-				
-				System.out.print("\n\nInforme o id do produto " + (i+1) + ": ");
-				tempId[i] = in.nextInt();
-				
-				in.nextLine();
-				System.out.print("Informe o nome do produto" + (i+1) + ": ");
-				tempName[i] = in.nextLine();
-				
-				System.out.print("Informe a quantidade em estoque do produto " + (i+1) + ": ");
-				tempQtyStock[i] = in.nextInt();
-				
-				System.out.print("Informe o preço do produto " + (i+1) + ": ");
-				tempPrice[i] = in.nextBigDecimal();
-				
+				System.out.println("========================================================");
+				System.out.println("Insira o número de produtos que gostaria de adicionar ");
+				System.out.print("Insira 0 (zero) se não quiser adicionar produtos: ");
+				maxSize = in.nextInt();
+				System.out.println("========================================================");
+				if(maxSize < 0) {
+					System.out.println("\n--------------------------------------------------------");
+					System.out.println("Valor incorreto inserido!");
+					System.out.println("--------------------------------------------------------\n");
+				}
 			} catch(Exception e) {
-				
-				System.out.print("================================================");
-				System.out.println("Valor inválido: " + e.getMessage());
-				System.out.print("================================================");
-				break;
+				System.out.println("========================================================");
+				System.out.println("\n--------------------------------------------------------");
+				System.out.println("Tipo incorreto de dados inserido: " + e.getMessage());
+				System.out.println("--------------------------------------------------------\n");
+				in.nextLine();
 			}
-							
+		}
+		
+		if(maxSize <= 0) {
+			System.out.println("\n--------------------------------------------------------");
+			System.out.println("Não há produtos1");
+			System.out.println("--------------------------------------------------------\n");
+		} else {
+			
+			Product[] products = new Product[maxSize];
+			
+			for(int i = 0; i < products.length; i++) {
+				try {
+					
+					System.out.printf("\nProduto: %d\n", (i+1));
+					System.out.print("Informe o id do produto " + (i+1) + ": ");
+					tempId[i] = in.nextInt();
+					
+					in.nextLine();
+					System.out.print("Informe o nome do produto " + (i+1) + ": ");
+					tempName[i] = in.nextLine();
+					
+					System.out.print("Informe a quantidade em estoque do produto " + (i+1) + ": ");
+					tempQtyStock[i] = in.nextInt();
+					
+					System.out.print("Informe o preço do produto " + (i+1) + ": ");
+					tempPrice[i] = in.nextBigDecimal();
+					
+					products[i] = new Product(tempId[i], tempName[i], tempQtyStock[i], tempPrice[i]);
+					
+				} catch(Exception e) {
+					
+					System.out.print("========================================================");
+					System.out.println("Valor inválido: " + e.getMessage());
+					System.out.print("========================================================");
+					break;
+				}
+								
+			}
+			
+			System.out.println();
+			System.out.println("--------------------------------------------------------");
+			System.out.print("Listando produtos\n");
+			System.out.println("--------------------------------------------------------\n");
+			for(Product product: products) {
+				System.out.println(product + "\n");
+			}
+			
 		}
 		
 		in.close();
-		
-		System.out.print("\n\n================================================\n");
-		System.out.print("Listando produtos\n");
-		System.out.print("================================================\n\n");
-		
-		Product p1 = new Product(tempId[0], tempName[0], tempQtyStock[0], tempPrice[0]);
-		Product p2 = new Product(tempId[1], tempName[1], tempQtyStock[1], tempPrice[1]);
-		Product p3 = new Product(10006, "Grand Theft Auto VI", 95, new BigDecimal("550.00"));
-		Product p4 = new Product(10004, "Red Dead Redemption II", 1376, new BigDecimal("250.00"));
-		Product p5 = new Product(10005, "Resident Evil 4 Remake", 650, new BigDecimal("160.00"));
-		Product p6 = new Product(10001, "The Witcher 3", 8329, new BigDecimal("100.00"));
-		
-		p6.setActive(false);
-		
-		Product[] products = {p1, p2, p3, p4, p5, p6};
-		
-		for(Product p: products) {
-			System.out.println(p + "\n");
-		}
 		
 	}
 
