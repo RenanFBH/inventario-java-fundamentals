@@ -24,12 +24,18 @@ public class Product {
 		this.price = price;
 	}
 	
+	public void addToInventory(int qty) {
+		this.qtyStock += qty;
+	}
+	
+	public void deductFromInventory(int qty) {
+		this.qtyStock -= qty;
+	}
+	
 	//Retorna o valor total em estoque do produto
 	public BigDecimal getInventoryValue() {
 		return getPrice().multiply(BigDecimal.valueOf(getQtyStock()));
 	}
-	
-	
 	
 	//Retorna a descrição do produto
 	public String toString() {
@@ -38,7 +44,7 @@ public class Product {
 				 + "\nNome: " + getName()
 				 + "\nQuantidade em estoque: " + getQtyStock()
 				 + "\nPreço: R$ " + real.format(getPrice()) 
-				 + "\nValor do estoqueço: R$" + real.format(getInventoryValue())
+				 + "\nValor do estoque: R$" + real.format(getInventoryValue())
 				 + "\nStatus do produto: " + (getActive() ? "Ativo" : "Descontinuado");
 		return s;
 	}
