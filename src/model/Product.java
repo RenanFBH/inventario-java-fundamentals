@@ -25,6 +25,10 @@ public class Product {
 	}
 	
 	public void addToInventory(int qty) {
+		if(!this.getActive()) {
+			System.out.println("\nProduto descontinuado!");
+			return;
+		}
 		this.qtyStock += qty;
 	}
 	

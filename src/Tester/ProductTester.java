@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import model.CD;
+import model.DVD;
 import model.Product;
 
 public class ProductTester {
@@ -42,36 +44,24 @@ public class ProductTester {
 	
 	public static void addToInventory(Scanner in, Product[] products) {
 		
-		int[] tempId = new int[6];
-		String[] tempName = new String[6];
-		int[] tempQtyStock = new int[6];
-		BigDecimal[] tempPrice = new BigDecimal[6];
-		
-		boolean isCreated = false;
+		int stockChoice = -1;
 		
 		for(int i = 0; i < products.length; i++) {
 			
-			while(!isCreated) {
+			while(stockChoice < 1 || stockChoice > 2) {
 				
 				try {
 					
-					System.out.printf("\nProduto: %d\n", (i+1));
-					System.out.print("Informe o id do produto " + (i+1) + ": ");
-					tempId[i] = in.nextInt();
+					System.out.println("\n1: CD");
+					System.out.println("2: DVD");
+					System.out.print("Insira o tipo de produto: ");
+					stockChoice = in.nextInt();
 					
-					in.nextLine();
-					System.out.print("Informe o nome do produto " + (i+1) + ": ");
-					tempName[i] = in.nextLine();
-					
-					System.out.print("Informe a quantidade em estoque do produto " + (i+1) + ": ");
-					tempQtyStock[i] = in.nextInt();
-					
-					System.out.print("Informe o preço do produto " + (i+1) + ": ");
-					tempPrice[i] = in.nextBigDecimal();
-					
-					products[i] = new Product(tempId[i], tempName[i], tempQtyStock[i], tempPrice[i]);
-					
-					isCreated = true;
+					if(stockChoice < 1 || stockChoice > 2) {
+						System.out.print("\n\n--------------------------------------------------------");
+						System.out.println("Somente os números 1 ou 2 são permitidos!");
+						System.out.print("--------------------------------------------------------\n\n");
+					}
 					
 				} catch(Exception e) {
 					
@@ -82,8 +72,126 @@ public class ProductTester {
 					
 				}
 				
+				
+				
+			}
+			
+			if(stockChoice == 1) {
+				addCDToInventory(in, products, i);
+			} else if(stockChoice == 2) {
+				addDVDToInventory(in, products, i);
 			}
 							
+		}
+		
+	}
+	
+	public static void addCDToInventory(Scanner in, Product[] products, int i) {
+		
+		int tempId;
+		String tempName;
+		int tempQtyStock;
+		BigDecimal tempPrice;
+		String tempArtist;
+		int tempNumberSongs;
+		String tempStamp;
+		
+		boolean isCreated = false;
+		while(!isCreated) {
+			
+			try {
+				
+				System.out.printf("\nCD: %d\n", (i+1));
+				System.out.print("Insira o nome do CD " + (i+1) + ": ");
+				tempName = in.next();
+				
+				in.nextLine();
+				System.out.print("Insira o nome do artista " + (i+1) + ": ");
+				tempArtist = in.nextLine();
+				
+				System.out.print("Insira o nome do selo de gravação " + (i+1) + ": ");
+				tempStamp = in.next();
+				
+				System.out.print("Insira o número de músicas " + (i+1) + ": ");
+				tempNumberSongs = in.nextInt();
+				
+				System.out.print("Insira a quantidade em estoque para este produto " + (i+1) + ": ");
+				tempQtyStock = in.nextInt();
+				
+				System.out.print("Insira o preço para este produto " + (i+1) + ": ");
+				tempPrice = in.nextBigDecimal();
+				
+				System.out.print("Insira o número do item " + (i+1) + ": ");
+				tempId = in.nextInt();
+				
+				products[i] = new CD(tempId, tempName, tempQtyStock, tempPrice, tempArtist, tempNumberSongs, tempStamp);
+				
+				isCreated = true;
+					
+				} catch(Exception e) {
+					
+					System.out.print("\n\n--------------------------------------------------------");
+					System.out.println("\nValor inválido: " + e.getMessage());
+					System.out.print("--------------------------------------------------------\n\n");
+					in.nextLine();
+					
+				}
+								
+		}
+		
+	}
+	
+	public static void addDVDToInventory(Scanner in, Product[] products, int i) {
+		
+		int tempId;
+		String tempName;
+		int tempQtyStock;
+		BigDecimal tempPrice;
+		int tempDurationMinutes;
+		int tempAgeRating;
+		String tempFilmStudio;
+		
+		boolean isCreated = false;
+		while(!isCreated) {
+			
+			try {
+				
+				System.out.printf("\nDVD: %d\n", (i+1));
+				System.out.print("Insira o nome do DVD " + (i+1) + ": ");
+				tempName = in.next();
+				
+				in.nextLine();
+				System.out.print("Insira o nome do estúdio cinematográfico " + (i+1) + ": ");
+				tempFilmStudio = in.nextLine();
+				
+				System.out.print("Insira a classificação etária " + (i+1) + ": ");
+				tempAgeRating = in.nextInt();
+				
+				System.out.print("Insira a duração em minutos " + (i+1) + ": ");
+				tempDurationMinutes = in.nextInt();
+				
+				System.out.print("Insira a quantidade em estoque para este produto " + (i+1) + ": ");
+				tempQtyStock = in.nextInt();
+				
+				System.out.print("Insira o preço para este produto " + (i+1) + ": ");
+				tempPrice = in.nextBigDecimal();
+				
+				System.out.print("Insira o número do item " + (i+1) + ": ");
+				tempId = in.nextInt();
+				
+				products[i] = new DVD(tempId, tempName, tempQtyStock, tempPrice, tempDurationMinutes, tempAgeRating, tempFilmStudio);
+				
+				isCreated = true;
+					
+				} catch(Exception e) {
+					
+					System.out.print("\n\n--------------------------------------------------------");
+					System.out.println("\nValor inválido: " + e.getMessage());
+					System.out.print("--------------------------------------------------------\n\n");
+					in.nextLine();
+					
+				}
+								
 		}
 		
 	}
